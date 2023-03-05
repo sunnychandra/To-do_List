@@ -1,0 +1,26 @@
+<h1>To-Do-List</h1>
+<br>
+<div class="outborder">
+    <p>{{'tasks to be done' | titlecase}}</p>
+    <p>{{'Tasks completed' | titlecase}}</p>
+</div>
+<div class="border">
+    <div cdkDropList #todo="cdkDropList" [cdkDropListData]="tasks" [cdkDropListConnectedTo]="[done]" class="cont"
+        (cdkDropListDropped)="drop($event)">
+        <div class="left" *ngFor="let task of tasks" cdkDrag>{{task | titlecase}}</div>
+    </div>
+    <div class="cont-right" cdkDropList #done="cdkDropList" [cdkDropListData]="completed"
+        [cdkDropListConnectedTo]="[todo]" (cdkDropListDropped)="drop($event)">
+        <div class="right" *ngFor="let com of completed" cdkDrag>{{com | titlecase}}</div>
+    </div>
+</div>
+<div class="outborder">
+    <button class="btn" type="button" (click)="show=!show">{{show? "Cancel" : "Add To The List" }} </button>
+    <button class="btn" type="button" (click)="clear()">Clear The List</button>
+</div>
+<br>
+<form *ngIf="show" class="add">
+    <input type="text" [(ngModel)]="listadd" (keyup.enter)="additem()" [ngModelOptions]="{standalone: true}"
+        placeholder="Enter Item">
+    <button type="button" (click)="additem()">Add Item</button>
+</form>
